@@ -57,46 +57,46 @@ class MirakleClient:
     def invoices(self):
         return self.resources.get('invoices')
 
-        @property
+    @property
     def transactions_logs(self):
         return self.resources.get('transactions_logs')
 
-        @property
+    @property
     def threads(self):
         return self.resources.get('threads')
 
-        @property
+    @property
     def shipments(self):
         return self.resources.get('shipments')
 
-        @property
+    @property
     def offers(self):
         return self.resources.get('offers')
 
-        @property
+    @property
     def orders(self):
         return self.resources.get('orders')
 
-        @property
+    @property
     def settings(self):
         return self.resources.get('settings')
 
-        @property
+    @property
     def shipping(self):
         return self.resources.get('shipping')
 
-        @property
+    @property
     def products(self):
         return self.resources.get('products')
 
-        @property
+    @property
     def promotions(self):
         return self.resources.get('promotions')
 
-        @property
+    @property
     def accounts(self):
         return self.resources.get('account')
 
-        @property
+    @property
     def shops(self):
         return self.resources.get('shops')
