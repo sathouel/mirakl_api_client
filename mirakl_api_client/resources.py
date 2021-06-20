@@ -1,5 +1,4 @@
 import json
-from mirakl_api_client import utils
 
 from mirakl_api_client.utils import urljoin
 
@@ -142,6 +141,12 @@ class OffersPool(
             urljoin(self._endpoint, 'export'), self._session
         )
 
+    @property
+    def states(self):
+        return OffersStates(
+            urljoin(self._endpoint, 'states'), self._session
+        )
+
 class OffersImportsPool(
     ResourcePool,
     CreatableResource,
@@ -162,6 +167,12 @@ class OffersExportPool(
     ResourcePool, 
     ListableResource):
     pass
+
+class OffersStates(
+    ResourcePool,
+    ListableResource):
+    pass
+
 # Orders
 
 class OrdersPool(
@@ -193,6 +204,18 @@ class OrdersPool(
         return OrdersAdjustPool(
             urljoin(self._endpoint, 'adjust'), self._session
         )
+
+    @property
+    def documents(self):
+        return OrdersDocumentsPool(
+            urljoin(self._endpoint, 'documents'), self._session
+        )
+
+    @property
+    def taxes(self):
+        return OrdersTaxesPool(
+            urljoin(self._endpoint, 'taxes'), self._session
+        )
     
     def accept(self, order_id):
         return OrdersAcceptPool(
@@ -222,6 +245,21 @@ class OrdersPool(
     def evaluation(self, order_id):
         return OrdersEvaluationPool(
             urljoin(self._endpoint, order_id, 'evaluation'), self._session
+        )
+    
+    def lines(self, order_id):
+        return OrdersLinesPool(
+            urljoin(self._endpoint, order_id, 'lines'), self._session
+        )
+
+    def document_upload(self, order_id):
+        return OrdersDocumentsUploadPool(
+            urljoin(self._endpoint, order_id, 'documents'), self._session
+        )
+
+    def threads(self, order_id):
+        return OrdersThreadsPool(
+            urljoin(self._endpoint, order_id, 'threads'), self._session
         )
 
 
@@ -271,11 +309,306 @@ class OrdersEvaluationPool(
     ListableResource):
     pass
 
-class OrdersLinesPool:
+class OrdersLinesPool(
+    ResourcePool, 
+    GettableResource):
+    
+    def resolve_incident(self, line_id):
+        return OrdersLinesResolveIncidentPool(
+            urljoin(self._endpoint, line_id, 'resolve_incident'), self._session
+        )
+
+class OrdersLinesResolveIncidentPool(
+    ResourcePool, 
+    UpdatableResource):
     pass
 
-# IMPLEMENT ORDER THREAD CREATION /api/orders/{order_id}/threads
+class OrdersDocumentsPool(
+    ResourcePool,
+    ListableResource,
+    DeletableResource):
 
+    @property
+    def download(self):
+        return OrdersDocumentsDownloadPool(
+            urljoin(self._endpoint, 'download'), self._session
+        )
+
+class OrdersDocumentsDownloadPool(
+    ResourcePool, 
+    ListableResource):
+        pass
+
+class OrdersDocumentsUploadPool(
+    ResourcePool, 
+    CreatableResource):
+    pass
+
+class OrdersTaxesPool(
+    ResourcePool,
+    ListableResource):
+    pass
+
+class OrdersThreadsPool(
+    ResourcePool,
+    CreatableResource):
+    pass
+
+# Settings
+
+class SettingsPool(ResourcePool):
+    @property
+    def additional_fields(self):
+        return SettingsAdditionalFieldsPool(
+            urljoin(self._endpoint, 'additional_fields'), self._session
+        )
+
+    @property
+    def channels(self):
+        return SettingsChannelsPool(
+            urljoin(self._endpoint, 'channels'), self._session
+        )
+
+    @property
+    def documents(self):
+        return SettingsDocumentsPool(
+            urljoin(self._endpoint, 'documents'), self._session
+        )
+
+    @property    
+    def locales(self):
+        return SettingsLocalesPool(
+            urljoin(self._endpoint, 'locales'), self._session
+        )
+
+    @property
+    def reasons(self):
+        return SettingsReasonsPool(
+            urljoin(self._endpoint, 'reasons'), self._session
+        )
+
+    @property
+    def version(self):
+        return SettingsVersionPool(
+            urljoin(self._endpoint, 'version'), self._session
+        )
+
+    @property
+    def hierarchies(self):
+        return SettingsHierarchiesPool(
+            urljoin(self._endpoint, 'hierarchies'), self._session
+        )
+
+    @property
+    def values_lists(self):
+        return SettingsValuesListsPool(
+            urljoin(self._endpoint, 'values_lists'), self._session
+        )        
+
+class SettingsAdditionalFieldsPool(
+    ResourcePool,
+    ListableResource):
+    pass
+
+class SettingsChannelsPool(
+    ResourcePool,
+    ListableResource):
+    pass
+
+class SettingsDocumentsPool(
+    ResourcePool,
+    ListableResource):
+    pass
+
+class SettingsLocalesPool(
+    ResourcePool,
+    ListableResource):
+    pass
+
+class SettingsReasonsPool(
+    ResourcePool, 
+    GettableResource):
+    pass
+
+class SettingsVersionPool(
+    ResourcePool,
+    ListableResource):
+    pass
+
+class SettingsHierarchiesPool(
+    ResourcePool,
+    ListableResource):
+    pass
+
+class SettingsValuesListsPool(
+    ResourcePool,
+    ListableResource):
+    pass
+
+# Shipping
+
+class ShippingPool(ResourcePool):
+    @property
+    def zones(self):
+        return ShippingZonesPool(
+            urljoin(self._endpoint, 'zones'), self._session
+        )
+
+    @property
+    def types(self):
+        return ShippingTypesPool(
+            urljoin(self._endpoint, 'types'), self._session
+        )
+
+    @property
+    def carriers(self):
+        return ShippingCarriersPool(
+            urljoin(self._endpoint, 'carriers'), self._session
+        )        
+
+    @property
+    def logistic_classes(self):
+        return ShippingLogisticClassesPool(
+            urljoin(self._endpoint, 'logistic_classes'), self._session
+        )                
+
+class ShippingZonesPool(
+    ResourcePool, 
+    ListableResource):
+    pass
+
+class ShippingTypesPool(
+    ResourcePool, 
+    ListableResource):
+    pass
+
+class ShippingCarriersPool(
+    ResourcePool, 
+    ListableResource):
+    pass
+
+class ShippingLogisticClassesPool(
+    ResourcePool,
+    ListableResource):
+    pass
 # Products 
 
-# IMPLEMENT /api/products/offers
+class ProductsPool(
+    ResourcePool, 
+    ListableResource):
+
+    @property
+    def imports(self):
+        return ProductsImportsPool(
+            urljoin(self._endpoint, 'imports'), self._session
+        )
+
+    @property
+    def attributes(self):
+        return ProductsAttributesPool(
+            urljoin(self._endpoint, 'attributes'), self._session
+        )
+
+    @property
+    def offers(self):
+        return ProductsOffersPool(
+            urljoin(self._endpoint, 'offers'), self._session
+        )
+
+class ProductsImportsPool(
+    ResourcePool,
+    CreatableResource,
+    GettableResource,
+    ListableResource):
+    
+    def error_report(self, import_id):
+        return ProductsImportsErrorReportPool(
+            urljoin(self._endpoint, import_id, 'error_report'), self._session
+        )
+
+    def new_product_report(self, import_id):
+        return ProductsImportsNewProductReportPool(
+            urljoin(self._endpoint, import_id, 'new_product_report'), self._session
+        )
+
+    def transformed_file(self, import_id):
+        return ProductsImportsTransformedFilePool(
+            urljoin(self._endpoint, import_id, 'transformed_file'), self._session
+        )
+
+    def transformation_error_report(self, import_id):
+        return ProductsImportsTransformationErrorReportPool(
+            urljoin(self._endpoint, import_id, 'transformation_error_report'), self._session
+        )
+
+class ProductsImportsErrorReportPool(
+    ResourcePool,
+    ListableResource):
+    pass
+
+class ProductsImportsNewProductReportPool(
+    ResourcePool,
+    ListableResource):
+    pass
+
+class ProductsImportsTransformedFilePool(
+    ResourcePool,
+    ListableResource):
+    pass
+
+class ProductsImportsTransformationErrorReportPool(
+    ResourcePool,
+    ListableResource):
+    pass
+
+class ProductsAttributesPool(
+    ResourcePool, 
+    ListableResource):
+    pass
+
+class ProductsOffersPool(
+    ResourcePool, 
+    ListableResource):
+    pass
+
+# Promitions
+
+class PromotionsPool(
+    ResourcePool,
+    ListableResource):
+    pass
+
+# Account
+
+class AccountPool(
+    ResourcePool,
+    ListableResource):
+    pass
+
+# Shops
+
+class ShopsPool(ResourcePool):
+
+    @property
+    def documents(self):
+        return ShopsDocumentsPool(
+            urljoin(self._endpoint, 'documents'), self._session
+        )
+
+
+class ShopsDocumentsPool(
+    ResourcePool,
+    ListableResource,
+    CreatableResource,
+    DeletableResource):
+
+    @property
+    def download(self):
+        return ShopsDocumentsDownloadPool(
+            urljoin(self._endpoint, 'download'), self._session
+        )
+
+class ShopsDocumentsDownloadPool(
+    ResourcePool,
+    ListableResource):
+    pass
