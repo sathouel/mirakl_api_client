@@ -12,8 +12,14 @@ class ResourcePool:
         return self._endpoint
 
 class CreatableResource:
-    def create_item(self, item):
-        res = self._session.post(self._endpoint, data=json.dumps(item))
+    def create_item(self, item, files=None):
+        if files:
+            self._session.headers.pop('Content-Type')
+            self._session.headers.pop('Accept')
+            print(self._session.headers)
+            res = self._session.post(self._endpoint, files=files, data=item)
+        else:
+            res = self._session.post(self._endpoint, data=json.dumps(item))
         return res
 
 class GettableResource:
@@ -143,7 +149,7 @@ class OffersPool(
 
     @property
     def states(self):
-        return OffersStates(
+        return OffersStatesPool(
             urljoin(self._endpoint, 'states'), self._session
         )
 
@@ -168,7 +174,7 @@ class OffersExportPool(
     ListableResource):
     pass
 
-class OffersStates(
+class OffersStatesPool(
     ResourcePool,
     ListableResource):
     pass

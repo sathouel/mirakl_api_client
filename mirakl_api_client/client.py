@@ -11,7 +11,7 @@ class MirakleClient:
         self._hostname = hostname
         self._api_key = api_key   
 
-        self._base_url = utils.urljoin('https://', self._hostname, 'api')
+        self._base_url = utils.urljoin('https://' + self._hostname, 'api')
         self._resources = {
             'invoices': resources.InvoicesPool(
                 utils.urljoin(self._base_url, 'invoices'), self._session),
@@ -21,7 +21,7 @@ class MirakleClient:
                 utils.urljoin(self._base_url, 'threads'), self._session),
             'shipments': resources.ShipmentsPool(
                 utils.urljoin(self._base_url, 'shipments'), self._session),
-            'offers': resources.OffersStates(
+            'offers': resources.OffersPool(
                 utils.urljoin(self._base_url, 'offers'), self._session),
             'orders': resources.OrdersPool(
                 utils.urljoin(self._base_url, 'orders'), self._session),
