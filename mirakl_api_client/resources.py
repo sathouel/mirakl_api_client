@@ -448,7 +448,8 @@ class SettingsHierarchiesPool(
 
 class SettingsValuesListsPool(
     ResourcePool,
-    ListableResource):
+    ListableResource,
+    GettableResource):
     pass
 
 # Shipping
