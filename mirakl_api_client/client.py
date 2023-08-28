@@ -18,7 +18,7 @@ class MirakleClient:
             'transactions_logs': resources.TransactionsLogsPool(
                 utils.urljoin(self._base_url, 'sellerpayment/transactions_logs'), self._session),
             'threads': resources.ThreadsPool(
-                utils.urljoin(self._base_url, 'threads'), self._session),
+                utils.urljoin(self._base_url, 'inbox/threads'), self._session),
             'shipments': resources.ShipmentsPool(
                 utils.urljoin(self._base_url, 'shipments'), self._session),
             'offers': resources.OffersPool(
